@@ -7,11 +7,37 @@
     <title>Gatos aleatorios</title>
 </head>
 <body>
-    <h1>Gatos aleatorios</h1>
-    <img id="img1" width="150" alt="Foto gato aleatorio">
-    <img id="img2" width="150" alt="Foto gato aleatorio">
-    <img id="img3" width="150" alt="Foto gato aleatorio">
-    <button onclick="reload()">Recargar</button>
+    <h1>Gatos App</h1>
+
+    <section id="randomMichis">
+        <h2>Gatos aleatorios</h2>
+
+        <article>
+            <img id="img1" width="150" alt="Foto gato aleatorio">
+            <button>Guardar gato en favoritos</button>
+        </article>
+
+        <article>
+            <img id="img2" width="150" alt="Foto gato aleatorio">
+            <button>Guardar gato en favoritos</button>
+        </article>
+
+        <article>
+            <img id="img3" width="150" alt="Foto gato aleatorio">
+            <button>Guardar gato en favoritos</button>
+        </article>
+        
+        <button onclick="reload()">Recargar</button>
+    </section>
+
+    <h2>Gatos favoritos</h2>
+    <section id="favoritesMichis">
+        <article>
+            <img id="img1" width="150" alt="Foto gato aleatorio">
+            <button>Sacar de favoritos</button>
+        </article>
+    </section>
+
     <script src="main.js"></script>
 </body>
 </html>
