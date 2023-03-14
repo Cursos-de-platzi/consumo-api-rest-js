@@ -8,18 +8,22 @@
 </head>
 <body>
     <h1>Gatos App</h1>
-    <span id="error"></span>
+    <span id="error">hola</span>
 
     <section id="randomMichis">
         <h2>Gatos aleatorios</h2>
         <article>
             <img id="img1" width="150" alt="Foto gato aleatorio">
-            <button>Guardar gato en favoritos</button>
+            <button id="btn1" onclick="saveFavouriteMichis()">
+                Guardar gato en favoritos
+            </button>
         </article>
 
         <article>
             <img id="img2" width="150" alt="Foto gato aleatorio">
-            <button>Guardar gato en favoritos</button>
+            <button id="btn2" onclick="saveFavouriteMichis()">
+                Guardar gato en favoritos
+            </button>
         </article>
         
         <button onclick="loadRandomMichis()">Recargar</button>

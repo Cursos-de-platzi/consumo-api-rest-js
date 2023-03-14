@@ -9,7 +9,7 @@ const API_URL = 'https://api.thecatapi.com/v1/images/search?limit=3';
 // con API_KEY
 const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV';
 const API_URL_FAVORITES = 'https://api.thecatapi.com/v1/favourites?limit=2&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV';
-const spanError = document.getElementById('error');
+const spanError = document.getElementById('error')
 /*
 fetch nos devuelve una promesa, y las promesas podemos resolverlas con el metodo then.
 cuando cargamos un API, lo primero que tenemos que hacer es convertir esa respuesta a algo que js pueda entender como un objeto
@@ -63,14 +63,38 @@ async function loadRandomMichis(){
     }
 }
 
-async function loadFavoritesMichis(){
+async function loadFavouriteMichis(){
     const res = await fetch(API_URL_FAVORITES);      // estamos llamando a la API
     const data = await res.json();         // estamos convirtiendo eso a sintaxis que js pueda entender
-    console.log('favorites');
+    console.log('favourites');
     console.log(data);
     if(res.status !== 200){
         spanError.innerHTML = "Hubo un error: " + res.status + data.message; 
      }
 }
+
+async function saveFavouriteMichis(){
+    /* cuando llamamos a fetch y le queremos indicar un metodo distinto al por defecto que es GET, en este caso POST
+    tenemos que especificarselo con un segundo argumento de nuestra funcion, en este caso es un objeto que tiene toda la info para enviarle al API
+    por defecto siempre nos pide un header y un body
+    el body es la imagen que queremos guardar en favoritos
+    */
+    const res = await fetch(API_URL_FAVORITES, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            image_id: 'dte'
+        }),
+    });
+    const data = await res.json();
+    console.log('Save')
+    console.log(res)
+    if(res.status !== 200){
+        spanError.innerHTML = "Hubo un error: " + res.status + data.message; 
+     }
+}
+
 loadRandomMichis();
-loadFavoritesMichis();
+loadFavouriteMichis();
