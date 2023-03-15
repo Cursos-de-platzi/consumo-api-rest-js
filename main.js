@@ -9,6 +9,7 @@ const API_URL = 'https://api.thecatapi.com/v1/images/search?limit=3';
 // con API_KEY
 const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV';
 const API_URL_FAVORITES = 'https://api.thecatapi.com/v1/favourites?&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV';
+const API_URL_FAVORITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}?&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV`;
 const spanError = document.getElementById('error')
 /*
 fetch nos devuelve una promesa, y las promesas podemos resolverlas con el metodo then.
@@ -75,16 +76,23 @@ async function loadFavouriteMichis(){
     if(res.status !== 200){
         spanError.innerHTML = "Hubo un error: " + res.status + data.message; 
      } else{
+         const section = document.getElementById('favoriteMichis');
+        section.innerHTML = "";
+        const h2  = document.createElement('h2');
+        const h2Text  = document.createTextNode('Michis favoritos');
+        h2.appendChild(h2Text);
+        section.appendChild(h2);
+
         data.forEach(gato => {
-            const section = document.getElementById('favoriteMichis');
             const article = document.createElement('article');
             const img = document.createElement('img');
             const btn = document.createElement('button');
             const btnText = document.createTextNode('Sacar al gato de favoritos');
 
-            btn.appendChild(btnText);
             img.src = gato.image.url;
             img.width = 150;
+            btn.appendChild(btnText);
+            btn.onclick = () => deleteFavouriteMichi(gato.id);
             article.appendChild(img);
             article.appendChild(btn);
             section.appendChild(article);
@@ -112,6 +120,22 @@ async function saveFavouriteMichi(id){
     console.log(res)
     if(res.status !== 200){
         spanError.innerHTML = "Hubo un error: " + res.status + data.message; 
+     }else{
+        console.log('Michi guardado en favoritos');
+        loadFavouriteMichis();
+     }
+}
+
+async function deleteFavouriteMichi(id) {
+    const res = await fetch(API_URL_FAVORITES_DELETE(id), {
+    method: 'DELETE',
+    });
+    const data = await res.json();
+    if(res.status !== 200){
+        spanError.innerHTML = "Hubo un error: " + res.status + data.message; 
+     }else{
+        console.log('Michi eliminado de favoritos');
+        loadFavouriteMichis();
      }
 }
 
