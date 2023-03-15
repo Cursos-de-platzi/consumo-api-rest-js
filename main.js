@@ -7,9 +7,9 @@ const API_URL = 'https://api.thecatapi.com/v1/images/search?limit=3';
 */
 
 // con API_KEY
-const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV';
-const API_URL_FAVORITES = 'https://api.thecatapi.com/v1/favourites?&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV';
-const API_URL_FAVORITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}?&api_key=live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV`;
+const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2';
+const API_URL_FAVORITES = 'https://api.thecatapi.com/v1/favourites';
+const API_URL_FAVORITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}`;
 const spanError = document.getElementById('error')
 /*
 fetch nos devuelve una promesa, y las promesas podemos resolverlas con el metodo then.
@@ -69,7 +69,12 @@ async function loadRandomMichis(){
 }
 
 async function loadFavouriteMichis(){
-    const res = await fetch(API_URL_FAVORITES);      // estamos llamando a la API
+    const res = await fetch(API_URL_FAVORITES, {
+        method: 'GET',
+        headers:{
+            'X-API-KEY': "live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV"
+        },
+    });      // estamos llamando a la API
     const data = await res.json();         // estamos convirtiendo eso a sintaxis que js pueda entender
     console.log('favourites');
     console.log(data);
@@ -110,6 +115,7 @@ async function saveFavouriteMichi(id){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'X-API-KEY': 'live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV'
         },
         body: JSON.stringify({
             image_id: id
@@ -129,6 +135,9 @@ async function saveFavouriteMichi(id){
 async function deleteFavouriteMichi(id) {
     const res = await fetch(API_URL_FAVORITES_DELETE(id), {
     method: 'DELETE',
+    headers: {
+        'X-API-KEY': 'live_krhUpxDq3fu07pNXftZRxW8uYzUbaBpeScrPDskWc3YEPeBDnp14NQeM04yjXroV',
+    }
     });
     const data = await res.json();
     if(res.status !== 200){
